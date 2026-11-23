@@ -9,10 +9,17 @@
 
 | Channel | Build | Package |
 | --- | --- | --- |
-| Stable candidate | `1.0.0-rc4` | `com.nobi.scan` |
+| Stable candidate | [`1.0.0-rc6`](https://github.com/NavajyotiBayan/Nobi-Scan/releases/tag/v1.0.0-rc6) | `com.nobi.scan` |
 | Alpha tester | `1.0-alpha21` | `com.nobi.scan.alpha` |
 
-Check the repository’s **Releases** tab for published APKs, checksums, and source. The supplied APKs target ARM64 devices running Android 12L or later. Alpha and Stable can be installed side by side. Each keeps its own library.
+Download the signed APK, checksums, and matching source from [GitHub Releases](https://github.com/NavajyotiBayan/Nobi-Scan/releases). The supplied APKs target ARM64 devices running Android 12L or later. Alpha and Stable can be installed side by side. Each keeps its own library.
+
+<details>
+<summary>How do GitHub updates work?</summary>
+
+The direct-download APK checks for newer published releases. In RC6, an available update shows the changelog with **Install now** and **Later**. **Settings → About → Check for updates** also checks on demand. Android confirms the installation. The repository’s releases must be publicly readable for credential-free update checks.
+
+</details>
 
 ## Features
 
@@ -57,7 +64,7 @@ Use JDK 17, Android SDK Platform 37, and the included Gradle wrapper. Start from
 ./gradlew :app:assembleRelease :app:lintRelease :app:testDebugUnitTest
 ```
 
-The release APK is generated under `app/build/outputs/apk/release/`. Official upgrades use the established signing certificate for that channel. See [PROJECT_STATUS.md](PROJECT_STATUS.md) for verification history.
+The release APK is generated under `app/build/outputs/apk/release/`. Official upgrades use the established signing certificate for that channel. See [PROJECT_STATUS.md](PROJECT_STATUS.md) for verification history. Build with `-Pnobi.githubUpdates=false` when preparing Play output.
 
 ## Open-source credits
 

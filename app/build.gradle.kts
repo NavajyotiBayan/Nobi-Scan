@@ -4,6 +4,8 @@ plugins {
     alias(libs.plugins.kotlin.compose)
 }
 
+val githubUpdates = providers.gradleProperty("nobi.githubUpdates").map(String::toBooleanStrict).orElse(true)
+
 android {
     namespace = "com.nobi.scan"
     compileSdk = 37
@@ -12,16 +14,22 @@ android {
         applicationId = "com.nobi.scan"
         minSdk = 32
         targetSdk = 36
-        versionCode = 10003
-        versionName = "1.0.0-rc4"
+        versionCode = 10005
+        versionName = "1.0.0-rc6"
 
+        buildConfigField("boolean", "GITHUB_UPDATES", githubUpdates.get().toString())
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
     }
 
+    if (githubUpdates.get()) {
+        sourceSets.getByName("release").manifest.srcFile("src/github/AndroidManifest.xml")
+    }
+
     buildTypes {
+        debug { buildConfigField("boolean", "GITHUB_UPDATES", "false") }
         release {
             ndk.abiFilters.add("arm64-v8a")
             isMinifyEnabled = true
@@ -38,6 +46,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     packaging {
         jniLibs.useLegacyPackaging = false

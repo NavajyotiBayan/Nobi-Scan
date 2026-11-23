@@ -18,6 +18,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.nobi.scan.data.DocumentLibrary
 import com.nobi.scan.data.ScanPreferences
+import com.nobi.scan.update.UpdateControls
+import com.nobi.scan.update.UpdateDialog
 import com.nobi.scan.ui.camera.CameraScreen
 import com.nobi.scan.ui.components.AuraBackgroundBox
 import com.nobi.scan.ui.components.LiquidBottomDock
@@ -40,6 +42,7 @@ private enum class PdfTool { MERGE, ORGANIZE, COMPRESS }
 @Composable
 internal fun NobiRootScreen(
     preferences: ScanPreferences,
+    updates: UpdateControls?,
     onPreferencesChanged: (ScanPreferences) -> Unit,
     onToggleTheme: () -> Unit
 ) {
@@ -53,6 +56,10 @@ internal fun NobiRootScreen(
     fun finishTool() {
         pdfTool = null
         currentTab = NavigationTab.HOME
+    }
+
+    if (currentTab != NavigationTab.SCAN && activeTool == null) {
+        updates?.let { UpdateDialog(it) }
     }
 
     var editTarget by remember { mutableStateOf<File?>(null) }
@@ -82,7 +89,7 @@ internal fun NobiRootScreen(
                                     onOrganizePdf = { pdfTool = PdfTool.ORGANIZE },
                                     onCompressPdf = { pdfTool = PdfTool.COMPRESS }
                                 )
-                                NavigationTab.SETTINGS -> SettingsScreen(preferences, onPreferencesChanged)
+                                NavigationTab.SETTINGS -> SettingsScreen(preferences, onPreferencesChanged, updates)
                                 NavigationTab.SCAN -> Unit
                             }
                         }

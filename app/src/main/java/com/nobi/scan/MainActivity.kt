@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import com.nobi.scan.ui.NobiRootScreen
 import com.nobi.scan.ui.theme.LocalNobiPalette
 import com.nobi.scan.ui.theme.NobiScanTheme
+import com.nobi.scan.update.rememberUpdateControls
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,6 +27,7 @@ class MainActivity : ComponentActivity() {
         val store = ScanPreferencesStore(this)
         setContent {
             var preferences by remember { mutableStateOf(store.read()) }
+            val updates = if (BuildConfig.GITHUB_UPDATES) rememberUpdateControls() else null
             val isDark = preferences.appearance.isDark(isSystemInDarkTheme())
             NobiScanTheme(isDark) {
                 Surface(
@@ -34,6 +36,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     NobiRootScreen(
                         preferences = preferences,
+                        updates = updates,
                         onPreferencesChanged = { preferences = it; store.write(it) },
                         onToggleTheme = {
                             preferences = preferences.copy(

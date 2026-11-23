@@ -2,6 +2,18 @@
 
 Updated November 22, 2026. The public testing series starts at 1.0-alpha1 with the dedicated scanner tray. A Moto Edge 30 capture-to-PDF smoke test passed.
 
+## 1.0.0-rc6 launch-time update offer
+
+RC6 shows an update dialog when a foreground check finds a newer published GitHub release. The dialog shows the version, download size and release notes with Install now and Later. Later dismisses that version’s automatic offer, and Settings → About → Check for updates can reopen it. The offer waits until the user is outside the scanner and PDF tools.
+
+The signed ARM64 APK upgraded RC5 on the Moto Edge 30. Build, lint, fifteen JVM tests, signature, and 16 KB APK and ELF alignment passed. The signed build showed the private-feed message from the About check. An isolated device fixture simulated a newer release and verified the launch dialog, changelog, Later dismissal and reopening from About. GitHub download and installer handoff remain pending a live public release. RC5 can detect RC6 once published. The RC6 launch dialog can be exercised against a later published build.
+
+## 1.0.0-rc5 GitHub updater
+
+The direct APK checks GitHub on foreground entry at most once per day. Settings → About → Check for updates checks on demand. Published Stable and RC tags can be selected by increasing Android version code. The user starts the download, and RC5 verifies the SHA-256, package, version and current signing certificate before opening the Android installer. The build property `-Pnobi.githubUpdates=false` removes the update UI and its network and install permissions from the release configuration.
+
+Release assembly, lint, fourteen JVM tests, APK signature and native and ZIP 16 KB alignment passed. RC5 upgraded RC4 on the Moto Edge 30. The direct APK declared Internet and package-install permissions. The Play configuration manifest excluded both and set the updater flag to false. The manual check displayed the private-feed message on device. The namespace and package remain `com.nobi.scan`, version code 10004, API 32 minimum, API 36 target, ARM64. An end-to-end RC5 to RC6 upgrade still needs a published feed and a newer signed APK. No release or Play bundle was published.
+
 ## 1.0.0-rc4 batch import and large PDF compression
 
 RC4 promotes the tested Alpha20 multi-image scanner import and Alpha21 large PDF compression fix. The current Home layout and floating glass dock are the design baseline. RC4 inherits the reader contrast and installer branding fixes from the earlier Stable candidates. Stable uses `com.nobi.scan`, version code 10003, minimum API 32, target API 36, and the existing Stable signing key.

@@ -30,6 +30,7 @@ import com.nobi.scan.cv.DocumentFilter
 import com.nobi.scan.data.AppAppearance
 import com.nobi.scan.data.ScanPreferences
 import com.nobi.scan.ocr.OcrLanguage
+import com.nobi.scan.update.UpdateControls
 import com.nobi.scan.ui.components.AuraBackgroundBox
 import com.nobi.scan.ui.components.rememberNobiHaptics
 import com.nobi.scan.ui.theme.LocalNobiPalette
@@ -40,7 +41,9 @@ import java.io.IOException
 private enum class SettingsDialog { FILTER, LANGUAGE, STORAGE, LICENSES, RESET }
 
 @Composable
-internal fun SettingsScreen(preferences: ScanPreferences, onChange: (ScanPreferences) -> Unit) {
+internal fun SettingsScreen(
+    preferences: ScanPreferences, onChange: (ScanPreferences) -> Unit, updates: UpdateControls?
+) {
     val palette = LocalNobiPalette.current
     val haptics = rememberNobiHaptics()
     val context = LocalContext.current
@@ -110,6 +113,13 @@ internal fun SettingsScreen(preferences: ScanPreferences, onChange: (ScanPrefere
                     Text(version, color = palette.mutedInk)
                 }
                 SettingsDivider()
+                if (updates != null) {
+                    SettingsLink(
+                        "Check for updates",
+                        description = if (updates.available == null) null else "Update available"
+                    ) { updates.check(manual = true) }
+                    SettingsDivider()
+                }
                 SettingsLink("Open-source licenses") { dialog = SettingsDialog.LICENSES }
                 SettingsDivider()
                 SettingsLink("More tools", description = "@NavajyotiBayan", external = true) {
