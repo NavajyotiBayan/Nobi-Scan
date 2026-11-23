@@ -1,23 +1,73 @@
-# Nobi Scan 1.0.0-rc4
+<div align="center">
+  <img src="app/src/main/res/drawable-nodpi/nobi_scan_logo.png" width="96" height="96" alt="Nobi Scan logo">
+  <h1>Nobi Scan</h1>
+  <p>Scan, clean up, read, and manage PDFs offline on Android.</p>
+  <p><a href="#install">Install</a> · <a href="#features">Features</a> · <a href="#build-from-source">Build</a> · <a href="#open-source-credits">Credits</a> · <a href="#privacy">Privacy</a></p>
+</div>
 
-Nobi Scan is an offline Android document scanner. This workspace is the fourth release candidate, based on RC3 with the tested Alpha20 and Alpha21 improvements. It builds the stable package `com.nobi.scan`, separate from the existing `com.nobi.scan.alpha` tester build. The apps can coexist and each keeps its own private library. Use a PDF export to transfer a document.
+## Install
 
-## Build locally
+| Channel | Build | Package |
+| --- | --- | --- |
+| Stable candidate | `1.0.0-rc4` | `com.nobi.scan` |
+| Alpha tester | `1.0-alpha21` | `com.nobi.scan.alpha` |
 
-Use JDK 17, Android SDK Platform 37, and Build Tools 36.0.0. Set `ANDROID_HOME` or the SDK path in `local.properties`. The Gradle wrapper downloads dependencies from Google Maven, Maven Central, the Gradle Plugin Portal, and the scoped Tesseract4Android JitPack repository.
+Check the repository’s **Releases** tab for published APKs, checksums, and source. The supplied APKs target ARM64 devices running Android 12L or later. Alpha and Stable can be installed side by side. Each keeps its own library.
+
+## Features
+
+- Capture pages with the camera or import several photos into one draft.
+- Correct perspective, trim, straighten, reorder, and apply filters.
+- Recognize printed English, Assamese, and Hindi offline. Save ordinary or searchable PDFs.
+- Read, merge, split, organize, and compress PDFs locally.
+
+<details>
+<summary>How do I make a searchable PDF?</summary>
+
+From Review scan, tap **Save PDF**, enable **Searchable PDF**, and choose the document’s language. Use a PDF reader with Find to search the exported text. Printed Assamese recognition can still produce vowel-mark errors.
+
+</details>
+
+<details>
+<summary>What stays on my phone?</summary>
+
+The app keeps saved PDFs in its private library. Use **Export a copy** to save a separate file at a location you choose. Clearing app data or uninstalling removes the private library.
+
+</details>
+
+<details>
+<summary>How do I report an issue?</summary>
+
+Include the Nobi Scan version, Android version, device model, and steps to reproduce. For PDF-specific issues, use a synthetic example with no personal information.
+
+</details>
+
+## Build from source
+
+Use JDK 17, Android SDK Platform 37, and the included Gradle wrapper. Start from the release tag to build the source corresponding to a specific APK.
 
 ```sh
-./gradlew :app:assembleRelease :app:bundleRelease :app:lintRelease :app:testDebugUnitTest
+./gradlew :app:assembleRelease :app:lintRelease :app:testDebugUnitTest
 ```
 
-The APK and AAB are under `app/build/outputs/`. The release targets API 36, supports API 32 and later, and packages ARM64 native libraries. The OpenCV detector is used in both local build types.
+The release APK is generated under `app/build/outputs/apk/release/`. Official upgrades use the established signing certificate for that channel. See [PROJECT_STATUS.md](PROJECT_STATUS.md) for verification history.
 
-## Distribution
+## Open-source credits
 
-Sign the direct APK with the stable app-signing key. The Play bundle uses a separate upload key. Store the keys and build credentials individually outside this repository. For cross-channel updates, use the stable app-signing key when configuring Play App Signing. Keep the signed APK, hashes and matching source archive together per version. RC4 supplies a direct APK. Add a separately signed AAB when preparing a Play release. Alpha retains its existing package ID and signing key.
+| Project | How Nobi Scan uses it |
+| --- | --- |
+| [FairScan](https://github.com/pynicolas/FairScan) | Adapted the four-corner crop editor, corner interaction, coordinate utilities, and magnifier. The adapted files retain their GPL-3.0-or-later notices. |
+| [OpenCV](https://github.com/opencv/opencv) | Detects document contours and proposes crop corners. |
+| [Glasmio](https://github.com/NEORUAA/Glasmio) | Renders glass surfaces and navigation effects. |
+| [AndroidX](https://github.com/androidx/androidx) | CameraX handles capture. Jetpack Compose and Material 3 provide the interface foundations. |
+| [Tesseract4Android](https://github.com/adaptech-cz/tesseract4android), [Tesseract](https://github.com/tesseract-ocr/tesseract), and [tessdata_fast](https://github.com/tesseract-ocr/tessdata_fast) | Run on-device OCR using the bundled English, Assamese, and Hindi models. |
+| [PdfBox-Android](https://github.com/TomRoush/PdfBox-Android) | Edits PDF pages, embeds searchable text, and recompresses eligible images. |
+| [Noto](https://github.com/notofonts) | Provides font data for searchable PDF text. |
 
-Check 16 KB alignment both for native ELF load segments and for generated APKs. Run a device or emulator smoke test where `adb shell getconf PAGE_SIZE` prints `16384` before stable publication. See [Android 16 KB guidance](https://developer.android.com/guide/practices/page-sizes).
+[DocScannerPro](https://github.com/REBEL-ROOT/DocScannerPro) is credited in the source as a contour fallback reference. [Docucraft](https://github.com/BobbyESP/Docucraft), [OSS Document Scanner](https://github.com/ossappscollective/OSS-DocumentScanner), and [OpenScan](https://github.com/ethereal-developers/OpenScan) were workflow references.
 
-## Source and notices
+See [THIRD_PARTY.md](THIRD_PARTY.md) for versions and provenance, the [bundled notices](app/src/main/assets/notices/) for third-party terms, and [LICENSE](LICENSE) for Nobi Scan’s GPL license text.
 
-The intended FOSS license for Nobi Scan app code is GNU GPL-3.0-or-later. See [LICENSE](LICENSE) and the [source and dependency notes](THIRD_PARTY.md). Third-party code, fonts, and models retain their own terms. Package verification, the Play listing, and a complete corresponding-source review are publication steps. The local release candidate has no published store listing.
+## Privacy
+
+Scanning, OCR, and PDF processing run on the device. The **More tools** link opens GitHub in an external app.
