@@ -1,0 +1,4 @@
+Nobi Scan contains an adapted FairScan crop editor.
+Copyright 2025–2026 The FairScan authors.
+Upstream: https://github.com/pynicolas/FairScan
+The crop adaptation retains the upstream GPL-3.0-or-later notices.

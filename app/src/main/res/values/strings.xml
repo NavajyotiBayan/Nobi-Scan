@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Nobi Scan</string>
+    <string name="camera_permission_required">Camera permission is required to scan documents with Nobi-Scan.</string>
+    <string name="grant_permission">Grant Camera Permission</string>
+    <string name="document_mode">DOCUMENT</string>
+    <string name="id_card_mode">ID CARD</string>
+    <string name="book_mode">BOOK</string>
+    <string name="whiteboard_mode">WHITEBOARD</string>
+</resources>
