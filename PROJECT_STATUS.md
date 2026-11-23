@@ -1,6 +1,6 @@
 # Nobi Scan project status
 
-Updated November 22, 2026. The public testing series starts at 1.0-alpha1 with the dedicated scanner tray. A Moto Edge 30 capture-to-PDF smoke test passed.
+Alpha21 is the current tester-approved baseline.
 
 ## 1.0.0-rc4 batch import and large PDF compression
 
@@ -269,3 +269,56 @@ Release assembly, lint and signature verification passed. Eleven JVM tests passe
 2. Expand OCR and searchable PDF testing with controlled camera captures and varied printed text.
 3. Extend the library with folders and OCR text search.
 4. Compare both detectors on the Moto Edge 30 with the same annotated photos. Include FairScan corner fitting, manual correction rates and end-to-end preview latency before selecting a default or fallback.
+
+## 1.0-alpha15 built-in PDF reader
+
+Tap a PDF on Home or choose Nobi Scan Alpha in Android's Open with menu. The reader renders one page at a time and provides previous/next, a page-number jump, pinch and double-tap zoom, and pan. External PDFs are opened read-only. A temporary cache file is used for providers that return non-seekable input. Open in another app remains available for viewer features such as Find and text selection. Password-protected PDFs cannot be opened.
+
+Release assembly, lint, eleven JVM tests and APK signature verification passed. The signed ARM64 APK is 29,752,041 bytes. On Moto Edge 30, the library opened a two-page PDF in Nobi, next-page and page jump worked, and the external viewer chooser opened. Android listed Nobi Scan Alpha as an Open with option for a PDF in Downloads and opened it in the reader. Double-tap zoom changed the page viewport. The public RC1 remains separate.
+
+## 1.0-alpha16 Review scan editing tray
+
+Review keeps the animated stack preview above a frosted tray. The tray contains larger page thumbnails, reorder arrows, Rescan, Crop, Rotate, Filters, Delete, and both text actions. Keep scanning and Save PDF remain pinned beneath it. On short viewports, the review content can scroll above those actions. The tray stays expanded for direct access to the tools.
+
+Release assembly, lint, eleven JVM tests, signing and APK alignment verification passed. The signed ARM64 APK is 29,752,041 bytes and upgrades Alpha15 in place. On the Moto Edge 30, three test images were imported, reordered and filtered. Crop opened and applied, both text workflows opened, and text detection found the printed fixture. Deleting a draft page and rescanning a replacement with the camera produced a two-page PDF. The final signed build was checked in light and dark mode, including thumbnail selection and rotation. Short viewports and large-font settings still need device testing.
+
+## 1.0-alpha17 unified Crop editor
+
+Review scan → Crop opens one editor with Edges and Trim in a shared glass tray. Edges retains the source-image handles and magnifier. Trim shows the corrected page with rectangular handles, pinch zoom, rotation, straightening and Free, Original and A4 presets. Switching modes preserves edits. Reset affects the active mode. Apply crop commits both adjustments together and returns to Review scan.
+
+Release assembly, lint, eleven JVM tests, signing and APK alignment verification passed. The signed ARM64 APK is 29,776,617 bytes. The release upgraded Alpha16 in place on the Moto Edge 30. A skewed test page was edited in both modes, and resetting Edges preserved the trim and angle. Resetting Trim preserved a moved document corner. Applying from Edges retained Trim in the output, and the saved PDF showed only the intended center line. Text detection on the final build highlighted that same line. Light and dark layouts, A4 and rotation were checked. Large-text layouts and a fresh Android 12L installation remain untested for this release.
+
+## 1.0-alpha18 app-wide haptic feedback
+
+The interaction audit extends the shared Android haptic helper to text-field focus, app Back actions, menu and dialog dismissal, PDF confirmation buttons, reader zoom and text selection. Existing scan, dock, reorder and toggle cues continue to use the same helper. Applying a crop emits one confirmation. Turning a toggle off uses a standard tap because the Moto Edge 30 skipped the dedicated toggle-off effect. Android's touch feedback setting governs playback. The contribution guide requires feedback for new interactive controls.
+
+Release assembly, lint, eleven JVM tests, APK signing and alignment verification passed. The signed ARM64 APK is 29,776,617 bytes and upgraded Alpha17 on the Moto Edge 30. Android vibration history showed completed pulses for search focus, reader double-tap zoom, page-jump cancellation, Back navigation, Tools, crop drag and apply, and PDF save. On the final build, both flash states produced completed pulses. This smoke test measured Android playback history. Tactile intensity across devices remains a manual check.
+
+## 1.0-alpha19 Settings
+
+User testing passed. Build metadata verified from the APK: `com.nobi.scan.alpha`, version code 37, minimum API 32, target API 34 and ABI `arm64-v8a`. The approved artifacts are the signed APK and matching source ZIP.
+
+Settings offers System, Light and Dark appearance; a default scan filter and OCR language; and the searchable PDF default. The Home theme shortcut and the PDF reader use the same saved appearance preference. Defaults seed new scanner drafts, and draft overrides leave preferences intact. Local storage explains private documents and exported copies. About shows the build version, bundled licenses and notices, and More tools opens the NavajyotiBayan GitHub profile. Reset restores preferences and preserves the library.
+
+Release assembly, lint, eleven JVM tests, APK signing and alignment verification passed. The signed ARM64 APK is 29,809,466 bytes. On Moto Edge 30, the Alpha18 light preference and library survived the upgrade. Dark, Original, Assamese and searchable PDF on survived relaunch. A new import used Original, detected text used Assamese and the save dialog opened with searchable PDF selected. A draft override left the saved preference enabled. The FairScan license loaded and More tools opened the correct profile in the installed GitHub app. Reset restored initial values and the pre-test Light selection was restored using the Home shortcut. Large-text layouts, browser-only link routing and a fresh Android 12L install remain untested.
+
+| Alpha19 artifact | SHA-256 |
+| --- | --- |
+| Signed ARM64 APK | `504f32be9b56b35a832e4b4ab40214c94a246c38351ead9d1ec0c37a2fe9522e` |
+| Source ZIP | `0f6bce8641231dff2aa24146d4f2304a0e764c767581d2af8a50f557b4434d2a` |
+
+## 1.0-alpha20 multi-image scanner import
+
+User testing passed.
+
+Scanner Import accepts multiple images from one picker session, appends the successful images in Android’s returned order, and opens the first imported page in Review. Images are staged sequentially and failed files are reported without dropping successful pages. The replacement picker in Rescan remains single-select. PDF Merge already accepts multiple PDF files.
+
+Release assembly, lint, eleven JVM tests, APK signature and ZIP alignment checks passed. The signed ARM64 APK is 29,813,562 bytes and upgraded Alpha19 in place. On the Moto Edge 30, three selected images appeared as three pages. Import appended a fourth to the same draft, and a single-image rescan kept four pages. The saved four-page PDF opened in the reader with the expected first and last pages. The Android 12L fallback picker, larger batches and mixed success/failure batches remain untested on device.
+
+## 1.0-alpha21 large PDF compression
+
+User testing passed.
+
+Alpha20 could not shrink a six-page test PDF containing six 10,000 × 7,500 JPEGs. The bundled PDFBox DCT decode can ignore the requested subsampling and decode a full-resolution bitmap. Alpha21 samples eligible JPEG streams directly with Android’s decoder before bitmap allocation, releases working bitmaps, and keeps other decode paths within a lower budget. Oversized unsupported image encodings are retained as-is. Compression shows page progress and a Cancel action. The no-reduction path avoids copying the entire source to a temporary preview file.
+
+Release assembly, lint, eleven JVM tests, signing and ZIP alignment passed. The signed ARM64 APK is 29,821,754 bytes. On the Moto Edge 30, Balanced reduced the fixture from 175,549,459 to 4,594,368 bytes. Poppler confirmed six pages, 1,800 × 1,350 JPEGs, and identical extracted text. The source SHA-256 matched. Cancel returned to the picker without saving a copy. The user’s affected file, device and large non-JPEG scans were outside this device check.
