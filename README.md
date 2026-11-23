@@ -42,6 +42,13 @@ Include the Nobi Scan version, Android version, device model, and steps to repro
 
 </details>
 
+## Screenshots
+
+<p>
+  <img src="docs/screenshots/review.png" width="240" alt="Nobi Scan Review with three pages and editing tools">
+  <img src="docs/screenshots/crop.png" width="240" alt="Nobi Scan crop editor with Edges and Trim">
+</p>
+
 ## Build from source
 
 Use JDK 17, Android SDK Platform 37, and the included Gradle wrapper. Start from the release tag to build the source corresponding to a specific APK.
