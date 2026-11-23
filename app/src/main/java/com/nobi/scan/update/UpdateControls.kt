@@ -21,9 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.core.content.FileProvider
 import androidx.core.content.edit
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
-import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.nobi.scan.ui.components.rememberNobiHaptics
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
@@ -51,11 +48,6 @@ internal class UpdateControls(private val context: Context, private val scope: C
     fun check(manual: Boolean) {
         if (manual) visible = true
         if (busy) return
-        if (manual && available != null) return
-        val now = System.currentTimeMillis()
-        val last = preferences.getLong("checked_at", 0)
-        if (!manual && now - last in 0 until 86_400_000L) return
-        preferences.edit { putLong("checked_at", now) }
         busy = true
         status = "Checking GitHub…"
         operation = scope.launch {
@@ -143,17 +135,11 @@ internal fun shouldOfferUpdate(versionCode: Long?, offeredCode: Long): Boolean =
 
 @Composable
 internal fun rememberUpdateControls(): UpdateControls {
-    val owner = LocalLifecycleOwner.current
     val context = androidx.compose.ui.platform.LocalContext.current.applicationContext
     val scope = rememberCoroutineScope()
     val controls = remember(context, scope) { UpdateControls(context, scope) }
-    DisposableEffect(owner, controls) {
-        val observer = LifecycleEventObserver { _, event ->
-            if (event == Lifecycle.Event.ON_START) controls.check(manual = false)
-        }
-        owner.lifecycle.addObserver(observer)
-        onDispose { owner.lifecycle.removeObserver(observer) }
-    }
+    // Run once when the main activity is created. Returning from another activity keeps this effect.
+    LaunchedEffect(controls) { controls.check(manual = false) }
     return controls
 }
 

@@ -1,5 +1,12 @@
 # Nobi Scan project status
 
+## RC6 automatic update test rebuild
+
+The rebuild retains Stable package `com.nobi.scan` and RC6 version code 10005. It checks GitHub on each fresh app launch. The automatic prompt is offered once per newer version and the manual About check remains available. The changelog shown in the app comes from the GitHub Release description. Use `artifacts/RELEASE_NOTES.md` for this rebuild's release notes.
+
+Build with JDK 17 and Android SDK Platform 37 using `./gradlew :app:assembleRelease :app:lintRelease :app:testDebugUnitTest`.
+
+
 Updated November 22, 2026. The public testing series starts at 1.0-alpha1 with the dedicated scanner tray. A Moto Edge 30 capture-to-PDF smoke test passed.
 
 ## 1.0.0-rc6 launch-time update offer
@@ -281,3 +288,7 @@ Release assembly, lint and signature verification passed. Eleven JVM tests passe
 2. Expand OCR and searchable PDF testing with controlled camera captures and varied printed text.
 3. Extend the library with folders and OCR text search.
 4. Compare both detectors on the Moto Edge 30 with the same annotated photos. Include FairScan corner fitting, manual correction rates and end-to-end preview latency before selecting a default or fallback.
+
+### Rebuild verification
+
+Release assembly, release lint and 15 unit tests passed. The Stable signature matches RC5. APK and all ten native libraries passed 16 KB alignment checks. The launch behavior was previously verified on Moto Edge 30 with the same code in the RC5 launch-test build. The on-device RC6 upgrade requires the APK and matching metadata to be attached to the public release.
