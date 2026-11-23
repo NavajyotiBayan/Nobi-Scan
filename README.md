@@ -6,6 +6,7 @@
 </div>
 
 ## Install
+This is the Alpha tester branch. Stable install and upgrade notes are on `main`.
 
 | Channel | Build | Package |
 | --- | --- | --- |

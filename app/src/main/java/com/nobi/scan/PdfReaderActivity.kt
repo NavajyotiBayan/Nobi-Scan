@@ -8,14 +8,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Surface
-import androidx.compose.ui.Modifier
 import com.nobi.scan.data.ScanPreferencesStore
 import com.nobi.scan.ui.reader.PdfReaderScreen
-import com.nobi.scan.ui.theme.LocalNobiPalette
 import com.nobi.scan.ui.theme.NobiScanTheme
-import com.nobi.scan.ui.theme.SystemBarContrast
 
 class PdfReaderActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,15 +26,7 @@ class PdfReaderActivity : ComponentActivity() {
         setContent {
             val dark = appearance.isDark(isSystemInDarkTheme())
             NobiScanTheme(dark) {
-                val palette = LocalNobiPalette.current
-                SystemBarContrast(lightBackground = !dark)
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = palette.background,
-                    contentColor = palette.ink
-                ) {
-                    PdfReaderScreen(source = source, onClose = ::finish)
-                }
+                PdfReaderScreen(source = source, onClose = ::finish)
             }
         }
     }

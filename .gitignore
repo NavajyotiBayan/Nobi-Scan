@@ -7,9 +7,3 @@ local.properties
 /app/src/debug/assets/fairscan-segmentation-model.tflite
 
 /dist/
-
-# Release signing material is kept outside the source tree.
-*.jks
-*.keystore
-*.p12
-*.password

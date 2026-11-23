@@ -7,3 +7,6 @@
 - Tesseract4Android 4.9.0 runs the OCR engine. Its native dependency notices and the tessdata_fast language model license are in `app/src/main/assets/notices/ocr/`. Model checksums and the exact upstream commit are in [PROJECT_STATUS.md](PROJECT_STATUS.md). [Tesseract4Android source](https://github.com/adaptech-cz/Tesseract4Android/tree/4.9.0)
 - Noto Sans, Noto Sans Bengali, and Noto Sans Devanagari provide the searchable PDF font subsets. Their SIL OFL notices are bundled with the app. [Noto fonts](https://github.com/notofonts)
 - Finish auditing exact source revisions and corresponding source for all shipped and inherited components before distributing Stable publicly. The candidate archive contains the app's buildable source and bundled assets.
+
+The Alpha debug source can load a separately supplied FairScan segmentation model.
+The distributed Alpha APK uses OpenCV and the optional model is outside this repository.

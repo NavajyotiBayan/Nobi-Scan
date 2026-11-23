@@ -11,9 +11,9 @@ android {
     defaultConfig {
         applicationId = "com.nobi.scan"
         minSdk = 32
-        targetSdk = 36
-        versionCode = 10003
-        versionName = "1.0.0-rc4"
+        targetSdk = 34
+        versionCode = 39
+        versionName = "1.0-alpha21"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -23,6 +23,7 @@ android {
 
     buildTypes {
         release {
+            applicationIdSuffix = ".alpha"
             ndk.abiFilters.add("arm64-v8a")
             isMinifyEnabled = true
             isShrinkResources = true
@@ -40,7 +41,7 @@ android {
         compose = true
     }
     packaging {
-        jniLibs.useLegacyPackaging = false
+        jniLibs.useLegacyPackaging = true
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
@@ -84,4 +85,5 @@ dependencies {
 
     testImplementation("junit:junit:4.13.2")
     debugImplementation(libs.androidx.compose.ui.tooling)
+    debugImplementation("com.google.ai.edge.litert:litert:1.4.1")
 }

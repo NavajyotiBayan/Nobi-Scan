@@ -13,9 +13,9 @@
     <application
         android:name=".NobiApp"
         android:allowBackup="false"
-        android:icon="@drawable/nobi_scan_logo"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/nobi_scan_logo"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:hardwareAccelerated="true"
         android:theme="@style/Theme.NobiScan">
@@ -29,7 +29,6 @@
         </provider>
         <activity
             android:name=".MainActivity"
-            android:icon="@mipmap/ic_launcher"
             android:exported="true"
             android:screenOrientation="portrait"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
